@@ -67,7 +67,9 @@ pipeline {
 
     post {
         always {
-            junit 'pytest.xml'
+            junit '**/pytest.xml'
+            archiveArtifacts artifacts: '**/pytest.xml', fingerprint: true
         }
     }
+
 }
