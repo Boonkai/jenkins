@@ -49,6 +49,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'pytest -v --maxfail=1 --disable-warnings -q'
+                sh 'pytest --junitxml=pytest.xml'
             }
         }
     }
