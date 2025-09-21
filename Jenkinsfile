@@ -33,6 +33,8 @@ pipeline {
     agent any
 
     environment {
+        // In macOS (and Linux too), you can print out
+        // those environment variables in your terminal:
         PATH = "$HOME/Library/Python/3.9/bin:$PATH"
     }
 
