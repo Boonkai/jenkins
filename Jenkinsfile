@@ -44,7 +44,7 @@ pipeline {
                 sh '''
                     python3 -m pip install --upgrade pip
                     pip3 install pytest || true
-                    test -f requirements.txt && pip3 install -r requirements.txt || true
+                    // test -f requirements.txt && pip3 install -r requirements.txt || true
                 '''
             }
         }
