@@ -32,10 +32,14 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "$HOME/Library/Python/3.9/bin:$PATH"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Boonkai/jenkins.git'
+                git url: 'https://github.com/Boonkai/jenkins.git', branch: 'main'
             }
         }
 
@@ -43,8 +47,8 @@ pipeline {
             steps {
                 sh '''
                     python3 -m pip install --upgrade pip
-                    pip3 install pytest || true
-                    // test -f requirements.txt && pip3 install -r requirements.txt || true
+                    pip3 install --user pytest
+                    if [ -f requirements.txt ]; then pip3 install --user -r requirements.txt; fi
                 '''
             }
         }
@@ -52,6 +56,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
+                    echo "PATH during Test: $PATH"
                     pytest -v --maxfail=1 --disable-warnings -q --junitxml=pytest.xml
                 '''
             }
