@@ -50,8 +50,9 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                 pytest -v --maxfail=1 --disable-warnings -q --junitxml=pytest.xml
+                sh '''
+                    pytest -v --maxfail=1 --disable-warnings -q --junitxml=pytest.xml
+                '''
             }
         }
     }
