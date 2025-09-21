@@ -41,22 +41,24 @@ pipeline {
 
         stage('Install') {
             steps {
-                sh 'python3 -m pip install --upgrade pip'
-                sh 'pip3 install -r requirements.txt || true'
+                sh '''
+                    python3 -m pip install --upgrade pip
+                    pip3 install pytest || true
+                    test -f requirements.txt && pip3 install -r requirements.txt || true
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'pytest -v --maxfail=1 --disable-warnings -q'
-                sh 'pytest --junitxml=pytest.xml'
+                 pytest -v --maxfail=1 --disable-warnings -q --junitxml=pytest.xml
             }
         }
     }
 
     post {
         always {
-            junit '**/pytest.xml'
+            junit '/pytest.xml'
         }
     }
 }
