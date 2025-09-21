@@ -35,7 +35,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                 git branch: 'main', url:'https://github.com/Boonkai/jenkins.git'
+                git branch: 'main', url: 'https://github.com/Boonkai/jenkins.git'
             }
         }
 
@@ -50,6 +50,7 @@ pipeline {
         }
 
         stage('Test') {
+            steps {
                 sh '''
                     pytest -v --maxfail=1 --disable-warnings -q --junitxml=pytest.xml
                 '''
@@ -59,7 +60,7 @@ pipeline {
 
     post {
         always {
-            junit '/pytest.xml'
+            junit 'pytest.xml'
         }
     }
 }
